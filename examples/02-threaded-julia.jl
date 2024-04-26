@@ -39,7 +39,7 @@ plot(as, areas)
 # But I *actually* have two parameters I am interested in...
 function integrate_f(x₁, x₂, a::Vector, b::Vector)
     areas = zeros(length(a), length(b))
-    Threads.@threads for i in eachindex(a)
+    for i in eachindex(a)
         aᵢ = a[i]
         for j in eachindex(b)
             bᵢ = b[j]
