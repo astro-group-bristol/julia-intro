@@ -35,15 +35,18 @@
 
 
 #slide(title:"Before we begin ...")[
+  #one-by-one(start:2)[
   If you want to follow along:
   - #link("https://julialang.org/downloads/")[https://julialang.org/downloads/]
   - "One-liner" install
   #v(-2em)
+][
   #align(right, fat-text("... alternatively ..."))
   #v(-1em)
   #block(inset: (left: 4em))[
     Julia is installed on the *Astrophysics Servers*
   ]
+][
   #v(-1em)
   #fat-text("Shell in, join in!")
   #v(-0.5em)
@@ -63,47 +66,62 @@
   julia>
   ```
   ])
+  ]
 ]
 
 #slide(title:"Why Julia when there's X Y Z?", title-size: 42pt)[
   #v(-0.8em)
+  #one-by-one(start:2)[
   #boxed(fill-color: white.darken(10%), align(center, fat-text("The \"Two Language Problem\"")))
   #v(-0.8em)
+][
   #grid(
     columns: (50%, 50%),
     [
-      *Prototype*
+      #uncover("3-")[*Prototyping language*]
+      #uncover("4-")[
       - For _ease_ 😎
       - Simple language, quick to put stuff together 🔨
       - _Convenient_, few lines of code 🌝
       - Has all the tooling and utilities, nice package management 🥦
+      ]
     ],
-    [*The real thing*
+    [#uncover("3-")[*The 'real' language*]
+    #uncover("5-")[
       - For _speed_ ⚡
       - Complex language, time-consuming
       - _Difficult_ and error prone 🪲
       - Many lines of code
       - Probably won't do your analysis in this language 👀
     ]
+    ]
   )
+  #uncover("6-")[
   #boxed(fill-color: JULIA_GREEN)[
     Especially in *science*: skill disconnect between *researcher* and *developer*
   ]
-  // - scalability
-  // - "plant once harvest forever" thanks to multiple dispatch
+]
+]
 ]
 
 #slide(title:"Solving the problem")[
+  #one-by-one(start: 2)[
   A language that does both!
+][
   - Julia is #text(fill: JULIA_RED)[*simple*], #text(fill: JULIA_PURPLE)[*fast*], and #text(fill: JULIA_GREEN)[*scalable*]
   - Dynamically typed (optionally strongly typed)
   - Lets you reach under the hood *when you need to*
+]
+  #uncover("4-")[
   #v(-1.0em)
-  #align(right, fat-text("And solve many more"))
+  #align(right, fat-text("And solving many more"))
+]
   #v(0.2em)
+  #line-by-line(start: 4)[
   - Macro system for *domain specific languages* (DSLs)
-  - Multiple-dispatch for *highly optimized* execution / native and xPU backends / distributed
+  - Multiple-dispatch for *highly optimized* execution / native and xPU backends / distributed]
   #v(-0.5em)
+#uncover("6")[
   #boxed(fill-color: white.darken(10%), text(fill:TEXT_COLOR)[
     Julia is a *JIT* compiled, *garbage collected* language (MIT)
     - *Compiler embedded* in the runtime, built on *LLVM*
@@ -111,35 +129,49 @@
     - C/Fortran ABI and *Python* interop (*! astro*)
   ])
 ]
+]
 
 #slide(title:"Syntax")[
   #grid(
     columns: (60%, 40%),
     row-gutter: 10pt,
   [
+  #uncover("2-")[
   ```julia
   println("Hello World")
   5 + 3
   ```
+]
+#uncover("3-")[
   ```julia
   items = [1, 2, 3, 4, 5, 6]
   items[1] # indices start at 1
   ```
+]
+#uncover("4-")[
   ```julia
   items² = items .^ 2
   ```
+]
+#uncover("5-")[
   ```julia
   dot_product = items' * items
   ```
   ```julia
   matrix = items' .* items
   ```
+]
   ],
   [
+    #uncover("2-")[
   Familiar imperative syntax
   #v(2.1em)
+]
+  #uncover("4-")[
   *Broadcast* mechanism
+]
   #v(-0.2em)
+  #uncover("5-")[
   ```julia
   91
   ```
@@ -152,12 +184,13 @@
    5  10  15  20  25  30
    6  12  18  24  30  36
   ```
-  ])
+  ]])
 ]
 
-#slide(title:"Control flow and functions")[
+#slide(title:"Control flow and more")[
   #grid(columns: (40%, 1fr),
   [
+  #uncover("2-")[
   'Blocks' return values
   #v(-0.5em)
   ```julia
@@ -168,7 +201,9 @@
       4
   end
   ```
+]
   ],[
+  #uncover("3-")[
   String interpolation
   #v(-0.5em)
   ```julia
@@ -177,14 +212,18 @@
       println("$greeting Julia!")
   end
   ```
+]
   ]
 )
+  #uncover("4-")[
   Many ways to define a *function*
+]
   #set text(size: 23pt)
   #v(-0.5em)
   #grid(
     columns: (55%, 45%),
   [
+  #uncover("4-")[
   ```julia
   function quadratic_solve(a, b, c)
       Δ = √(b^2 - 4a * c)
@@ -194,7 +233,9 @@
   end
   ```
   (The `return` is optional)
+]
   ],[
+    #uncover("5-")[
     Or more mathsy:
     ```julia
     f(x) = 5x^2 + 3x - 4
@@ -202,11 +243,13 @@
     Use whichever feels \
     best 😇
   ]
+  ]
 )
 ]
 
 #slide(title:"Side effects")[
   If a function *modifies* its arguments, it's name ends *by convention* with a *`!`* (called a "bang" 🧨)
+  #uncover("2-")[
   #align(center)[
   ```julia
   a = [7, 2, 9, 3, 5, 1, 8, 4, 5]
@@ -216,13 +259,18 @@
   @assert a .== b
   ```
   ]
+]
+  #uncover("3-")[
   #align(right, fat-text("Easier to reason about code"))
+]
+#uncover("4-")[
   #boxed(fill-color:JULIA_BLUE, text(fill: SECONDARY_COLOR, [
     #v(0.2em)
     Many functions have *`!`* alternatives. \
     This is not enforced, but common *convention*.
     #v(0.2em)
   ]))
+]
 ]
 
 #slide(title: "")[
@@ -238,31 +286,42 @@
 
 #slide(title:"Why is Julia so fast?")[
   The #text(fill:JULIA_RED)[*compiler*] performs #text(fill: JULIA_GREEN)[*type inference*] on our code
+  #uncover("2-")[
   - Compiles a *specialized* version for *inferred types*
   - Generates *machine code* (JIT compiled)
   - In practice: first time you call a function there's a small *compile time* overhead
   - If the *types change*, the call stack is *recompiled*
+]
   #v(-0.5em)
+#uncover("3-")[
   #align(right, fat-text("Known as \"multiple dispatch\""))
+]
+#uncover("4-")[
   #v(-0.5em)
   In Julia *multiple dispatch* is the *core idiom*
   - Most languages have a *one definition rule* (ODR)
   - ODR: a function can only have *one* implementation
   - Some have *overloading* (C++ recently more sophisticated with C++20 Concepts)
 ]
+]
 
 #slide(title:"A look at multiple dispatch")[
   ```julia
   measure(x) = sqrt(x^2)
   ```
+  #one-by-one(start:2)[
   But what if my number is *complex*?
+][
   ```julia
   measure(x::Complex) = sqrt(x.re^2 + x.im^2)
   ```
+][
   But what if my number is actually a *vector*?
+][
   ```julia
   measure(x::Vector) = sqrt(x' * x)
   ```
+][
   #v(0.2em)
   #align(right)[Retain the #text(fill: JULIA_RED)[*meaning*], focus on the #text(fill: JULIA_PURPLE)[*action*]]
   Have the #text(fill: JULIA_GREEN)[*implementation*] do the #text(fill: JULIA_BLUE)[*right*] (or fast) thing
@@ -280,7 +339,8 @@
     measure([5, 1, 8])
     ```
   ])
-  #boxed(fill-color: white.darken(10%), align(center, fat-text("What's the compiler doing?")))
+][
+  #boxed(fill-color: white.darken(10%), align(center, fat-text("What's the compiler doing?")))]
 ]
 
 #slide(title: "Inspecting deeper")[
@@ -297,18 +357,23 @@
       @code_warntype f(x)
       ``` ],
   )
+  #uncover("2-")[
   They show us what the *compiler* sees and uses:
+]
   #grid(
     columns: (30%, 1fr),
     column-gutter: 3em,
     [
+      #uncover("2-")[
   ```julia
   julia> typeof(5.0)
   Float64
   julia> typeof(5)
   Int64
   ```
+]
   ],[
+    #uncover("3-")[
   ```julia
   julia> methods(measure)
   # 3 methods for generic function
@@ -320,6 +385,7 @@
    [3] measure(x)
        @ REPL[13]:1
   ```
+]
   ]
 )
 ]
@@ -380,6 +446,7 @@
   dif (x + y) &arrow.r.bar dif x + dif y \
   dif (x y) &arrow.r.bar dif x #h(6pt) y + x #h(3pt)dif y
   $
+  #uncover("2-")[
   Implementing in Julia:
   #text(size: 22pt)[
   #grid(columns: (30%, 1fr),
@@ -398,7 +465,7 @@
   ```
   ])
 ]
-  With *multiple dispatch* we can use it on existing functions!
+  With *multiple dispatch* straight forward to define!]
 ]
 
 #slide(title:"Example: extrema")[
@@ -410,11 +477,14 @@
   @assert 36 == ForwardDiff.derivative(f, 2)
   ```
   ])
+  #uncover("2-")[
   Root finding
   #v(-0.5em)
+]
 
   #grid(columns: (60%, 1fr),
   text(size: 22pt)[
+    #uncover("2-")[
   ```julia
   function newton_root(f, x₀; N = 10)
       df(x) = ForwardDiff.derivative(f, x)
@@ -424,40 +494,53 @@
       return x₀
   end
   ```
+]
   ],
   block[
+    #uncover("2-")[
   Find extrema with: $f'(x) = 0$
+]
   #v(1em)
+  #uncover("3-")[
   #fat-text("Try it out!")
+]
   ]
 )
-
+  #uncover("3-")[
   #boxed(fill-color: JULIA_GREEN)[
     See `examples/03-root-finding.jl` for an example.
   ]
+]
 ]
 
 #slide(title:"Julia for astrophysics")[
   #v(-0.3em)
   There's a growing *JuliaAstro* community full of wonderful people ✨🔭
+    #uncover("2-")[
   #boxed(fill-color: JULIA_GREEN)[
     #v(0.2em)
     Julia is *excellent* for data science, optimization problems, differential equation, machine learning...
     #v(0.2em)
 ]
+  ]
+  #uncover("3-")[
   Multiple dispatch is teaming with *emergent features*, propagate uncertainties just like dual numbers with *Measurements.jl*, or units with *Unitful.jl*
   - Easy access to various accelerator backends
   - Pandas-like *DataFrames.jl* and ML in *Lux.jl*
   - Interoperate with your favourite Python packages, but do the heavy lifting in *Julia*
   - High degree of *reproducibility* thanks to *Pkg.jl*
 ]
+]
 
 #slide(title:"But maybe why not Julia?")[
+  #one-by-one(start:2)[
   Learning a *new* language can be difficult, especially one as *different* as Julia
+][
   - *Pre-compile* times can be frustrating
   - Sometimes *error reporting* is a mess
   - Ecosystem *maturity* still growing
   - Type stability can be subtle and insanity inducing (c.f. Cthulhu.jl)
+][
   #boxed(fill-color: JULIA_GREEN)[
     #v(0.2em)
     But it's steadily *getting better*, and seeing *widespread adoption*
@@ -465,19 +548,25 @@
   ]
   Worth glancing at #link("https://julialang.org/blog/2022/02/10years/")[Why we use Julia, 10 years later].
 ]
+]
 
 #slide(title:"Where to find more")[
+  #uncover("2-")[
   #boxed(fill-color: JULIA_GREEN)[
     #v(0.2em)
-    #align(center)[*Ask me* (at the pub later 🫶)]
+    #align(center)[*Ask me* #uncover("3-")[(at the pub later 🫶)]]
     #v(0.2em)
   ]
+]
   #v(-1.0em)
+  #uncover("4-")[
   #boxed(fill-color: JULIA_BLUE)[
     #v(0.2em)
     #align(center)[Ask your colleagues *Andy*, *Gloria*, *Matt* ...]
     #v(0.2em)
   ]
+]
+  #uncover("5-")[
   The #link("https://docs.julialang.org/en/v1/")[Julia Documentation] is full of good things!
   - As is the #link("https://docs.sciml.ai/Overview/stable/")[SciML documentation]
   - I wrote a #link("https://github.com/RSE-Cambridge/julia-study-group/wiki/Resources")[list of resources] for the Cambridge RSE group
@@ -488,6 +577,7 @@
     #align(center)[Keep an eye out for *JuliaCon* 2024!]
     #v(0.2em)
   ]
+]
 ]
 
 #slide(title: "")[
