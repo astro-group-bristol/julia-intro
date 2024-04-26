@@ -5,7 +5,7 @@
 #show: tamburlaine-theme.with(aspect-ratio: "4-3")
 #show link: item => underline(text(blue)[#item])
 
-#enable-handout-mode(false)
+#enable-handout-mode(true)
 
 #let pretty-title = par(leading: 28pt)[
   #text(weight: "black", size:103pt, juliafy(
