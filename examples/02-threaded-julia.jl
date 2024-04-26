@@ -15,7 +15,7 @@ begin
 end
 
 function integrate_f(x₁, x₂, a, b)
-    integrate(x -> f(x, a, b), x₁, x₂; N = 100_000)
+    integrate(x -> f(x, a, b), x₁, x₂; N = 10_000)
 end
 
 # I want to know how the area changes as a function of the different
